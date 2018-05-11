@@ -12,3 +12,19 @@ jobs:
     steps:
       - checkout
       - run: docker build -t $IMAGE_NAME:$IMAGE_TAG .
+
+  test:
+    machine: true
+    environment:
+      <<: *image_config
+
+    steps:
+      - checkout
+      - run: docker run $IMAGE_NAME:$IMAGE_TAG
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test
