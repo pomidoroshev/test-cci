@@ -6,6 +6,8 @@ version: 2
 jobs:
   build:
     machine: true
+      docker_layer_caching: true
+
     environment:
       <<: *image_config
 
@@ -28,5 +30,5 @@ workflows:
     jobs:
       - build
       - test:
-          requires:
-            - build
+        requires:
+          - build
