@@ -1,12 +1,14 @@
+image_config: &image_config
+  IMAGE_NAME: test-cci
+  IMAGE_TAG: latest
+
 version: 2
 jobs:
   build:
-    docker:
-      - image: circleci/golang:1.9
-      
-    working_directory: /go/src/github.com/pomidoroshev/test-cci
+    machine: true
+    environment:
+      <<: *image_config
+
     steps:
       - checkout
-
-      - run: go get -v -t -d ./...
-      - run: go build main.go
+      - run: docker build -t $IMAGE_NAME:$IMAGE_TAG .
